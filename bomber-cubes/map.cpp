@@ -30,20 +30,16 @@ std::vector<int> Map::updateMapBombOnExplosion(int posBombX, int posBombZ) {
 
 			switch (map[i][posBombZ]) {
 			case 1:
-				// Kill player 1
-				// Assert end game
+				map[i][posBombZ] = 0;
 				break;
 			case 2:
-				// Kill player 2
-				// Assert end game
+				map[i][posBombZ] = 0;
 				break;
 			case 3:
-				// Kill player 3
-				// Assert end game
+				map[i][posBombZ] = 0;
 				break;
 			case 4:
-				// Kill player 4
-				// Assert end game
+				map[i][posBombZ] = 0;
 				break;
 			case 11:
 				// Undestroyable block
@@ -74,20 +70,16 @@ std::vector<int> Map::updateMapBombOnExplosion(int posBombX, int posBombZ) {
 
 			switch (map[i][posBombZ]) {
 			case 1:
-				// Kill player 1
-				// Assert end game
+				map[i][posBombZ] = 0;
 				break;
 			case 2:
-				// Kill player 2
-				// Assert end game
+				map[i][posBombZ] = 0;
 				break;
 			case 3:
-				// Kill player 3
-				// Assert end game
+				map[i][posBombZ] = 0;
 				break;
 			case 4:
-				// Kill player 4
-				// Assert end game
+				map[i][posBombZ] = 0;
 				break;
 			case 11:
 				// Undestroyable block
@@ -118,20 +110,16 @@ std::vector<int> Map::updateMapBombOnExplosion(int posBombX, int posBombZ) {
 
 			switch (map[posBombX][j]) {
 			case 1:
-				// Kill player 1
-				// Assert end game
+				map[posBombX][j] = 0;
 				break;
 			case 2:
-				// Kill player 2
-				// Assert end game
+				map[posBombX][j] = 0;
 				break;
 			case 3:
-				// Kill player 3
-				// Assert end game
+				map[posBombX][j] = 0;
 				break;
 			case 4:
-				// Kill player 4
-				// Assert end game
+				map[posBombX][j] = 0;
 				break;
 			case 11:
 				// Undestroyable block
@@ -162,20 +150,16 @@ std::vector<int> Map::updateMapBombOnExplosion(int posBombX, int posBombZ) {
 
 			switch (map[posBombX][j]) {
 			case 1:
-				// Kill player 1
-				// Assert end game
+				map[posBombX][j] = 0;
 				break;
 			case 2:
-				// Kill player 2
-				// Assert end game
+				map[posBombX][j] = 0;
 				break;
 			case 3:
-				// Kill player 3
-				// Assert end game
+				map[posBombX][j] = 0;
 				break;
 			case 4:
-				// Kill player 4
-				// Assert end game
+				map[posBombX][j] = 0;
 				break;
 			case 11:
 				// Undestroyable block

@@ -59,6 +59,11 @@ float colorPlayerFourR = 1.0f;
 float colorPlayerFourG = 1.0f;
 float colorPlayerFourB = 0.0f;
 
+bool isPlayerOneAlive = true;
+bool isPlayerTwoAlive = true;
+bool isPlayerThreeAlive = true;
+bool isPlayerFourAlive = true;
+
 float sizePlayerX = sizeSquareX / 2;
 float sizePlayerY = sizeSquareY * 2;
 float sizePlayerZ = sizeSquareZ / 2;
@@ -311,6 +316,12 @@ void displayMap() {
 		}
 	}
 
+	// Looking for players in the map, if not found, they are considered dead
+	bool isPlayerOneDrawn = false;
+	bool isPlayerTwoDrawn = false;
+	bool isPlayerThreeDrawn = false;
+	bool isPlayerFourDrawn = false;
+
 	// Displaying the map obstacles according to the matrix
 	for (int i = 0; i < nbSquareX; i++) {
 		for (int j = 0; j < nbSquareZ; j++) {
@@ -335,29 +346,47 @@ void displayMap() {
 				posZPlayer = j * sizeSquareZ + sizeSquareZ / 4;
 
 				displayCube(posXPlayer, 0.0f, posZPlayer, sizePlayerX, sizePlayerY, sizePlayerZ, colorPlayerOneR, colorPlayerOneG, colorPlayerOneB);
+
+				isPlayerOneDrawn = true;
 				break;
 			case 2:
 				posXPlayer = i * sizeSquareX + sizeSquareX / 4;
 				posZPlayer = j * sizeSquareZ + sizeSquareZ / 4;
 
 				displayCube(posXPlayer, 0.0f, posZPlayer, sizePlayerX, sizePlayerY, sizePlayerZ, colorPlayerTwoR, colorPlayerTwoG, colorPlayerTwoB);
+				isPlayerTwoDrawn = true;
 				break;
 			case 3:
 				posXPlayer = i * sizeSquareX + sizeSquareX / 4;
 				posZPlayer = j * sizeSquareZ + sizeSquareZ / 4;
 
 				displayCube(posXPlayer, 0.0f, posZPlayer, sizePlayerX, sizePlayerY, sizePlayerZ, colorPlayerThreeR, colorPlayerThreeG, colorPlayerThreeB);
+				isPlayerThreeDrawn = true;
 				break;
 			case 4:
 				posXPlayer = i * sizeSquareX + sizeSquareX / 4;
 				posZPlayer = j * sizeSquareZ + sizeSquareZ / 4;
 
 				displayCube(posXPlayer, 0.0f, posZPlayer, sizePlayerX, sizePlayerY, sizePlayerZ, colorPlayerFourR, colorPlayerFourG, colorPlayerFourB);
+				isPlayerFourDrawn = true;
 				break;
 			default:
 				break;
 			}
 		}
+	}
+
+	if (!isPlayerOneDrawn) {
+		isPlayerOneAlive = false;
+	}
+	if (!isPlayerTwoDrawn) {
+		isPlayerTwoAlive = false;
+	}
+	if (!isPlayerThreeDrawn) {
+		isPlayerThreeAlive = false;
+	}
+	if (!isPlayerFourDrawn) {
+		isPlayerFourAlive = false;
 	}
 }
 
@@ -477,71 +506,79 @@ void handleInput() {
 	}
 
 	// Player one
-	if (inp->keys[KEY_CODE_Z]) {
-		movePlayer(1, playerOne.getPlayerPosition().posX, playerOne.getPlayerPosition().posZ + 1);
-	}
-	if (inp->keys[KEY_CODE_Q]) {
-		movePlayer(1, playerOne.getPlayerPosition().posX + 1, playerOne.getPlayerPosition().posZ);
-	}
-	if (inp->keys[KEY_CODE_S]) {
-		movePlayer(1, playerOne.getPlayerPosition().posX, playerOne.getPlayerPosition().posZ - 1);
-	}
-	if (inp->keys[KEY_CODE_D]) {
-		movePlayer(1, playerOne.getPlayerPosition().posX - 1, playerOne.getPlayerPosition().posZ);
-	}
-	if (inp->keys[KEY_CODE_E]) {
-		isBombPlacedPlayerOne = true;
+	if (isPlayerOneAlive) {
+		if (inp->keys[KEY_CODE_Z]) {
+			movePlayer(1, playerOne.getPlayerPosition().posX, playerOne.getPlayerPosition().posZ + 1);
+		}
+		if (inp->keys[KEY_CODE_Q]) {
+			movePlayer(1, playerOne.getPlayerPosition().posX + 1, playerOne.getPlayerPosition().posZ);
+		}
+		if (inp->keys[KEY_CODE_S]) {
+			movePlayer(1, playerOne.getPlayerPosition().posX, playerOne.getPlayerPosition().posZ - 1);
+		}
+		if (inp->keys[KEY_CODE_D]) {
+			movePlayer(1, playerOne.getPlayerPosition().posX - 1, playerOne.getPlayerPosition().posZ);
+		}
+		if (inp->keys[KEY_CODE_E]) {
+			isBombPlacedPlayerOne = true;
+		}
 	}
 
 	// Player 2
-	if (inp->keys[KEY_CODE_T]) {
-		movePlayer(2, playerTwo.getPlayerPosition().posX, playerTwo.getPlayerPosition().posZ + 1);
-	}
-	if (inp->keys[KEY_CODE_F]) {
-		movePlayer(2, playerTwo.getPlayerPosition().posX + 1, playerTwo.getPlayerPosition().posZ);
-	}
-	if (inp->keys[KEY_CODE_G]) {
-		movePlayer(2, playerTwo.getPlayerPosition().posX, playerTwo.getPlayerPosition().posZ - 1);
-	}
-	if (inp->keys[KEY_CODE_H]) {
-		movePlayer(2, playerTwo.getPlayerPosition().posX - 1, playerTwo.getPlayerPosition().posZ);
-	}
-	if (inp->keys[KEY_CODE_Y]) {
-		isBombPlacedPlayerTwo = true;
+	if (isPlayerTwoAlive) {
+		if (inp->keys[KEY_CODE_T]) {
+			movePlayer(2, playerTwo.getPlayerPosition().posX, playerTwo.getPlayerPosition().posZ + 1);
+		}
+		if (inp->keys[KEY_CODE_F]) {
+			movePlayer(2, playerTwo.getPlayerPosition().posX + 1, playerTwo.getPlayerPosition().posZ);
+		}
+		if (inp->keys[KEY_CODE_G]) {
+			movePlayer(2, playerTwo.getPlayerPosition().posX, playerTwo.getPlayerPosition().posZ - 1);
+		}
+		if (inp->keys[KEY_CODE_H]) {
+			movePlayer(2, playerTwo.getPlayerPosition().posX - 1, playerTwo.getPlayerPosition().posZ);
+		}
+		if (inp->keys[KEY_CODE_Y]) {
+			isBombPlacedPlayerTwo = true;
+		}
 	}
 
 	// Player 3
-	if (inp->keys[KEY_CODE_O]) {
-		movePlayer(3, playerThree.getPlayerPosition().posX, playerThree.getPlayerPosition().posZ + 1);
-	}
-	if (inp->keys[KEY_CODE_K]) {
-		movePlayer(3, playerThree.getPlayerPosition().posX + 1, playerThree.getPlayerPosition().posZ);
-	}
-	if (inp->keys[KEY_CODE_L]) {
-		movePlayer(3, playerThree.getPlayerPosition().posX, playerThree.getPlayerPosition().posZ - 1);
-	}
-	if (inp->keys[KEY_CODE_M]) {
-		movePlayer(3, playerThree.getPlayerPosition().posX - 1, playerThree.getPlayerPosition().posZ);
-	}
-	if (inp->keys[KEY_CODE_P]) {
-		isBombPlacedPlayerThree = true;
+	if (isPlayerThreeAlive) {
+		if (inp->keys[KEY_CODE_O]) {
+			movePlayer(3, playerThree.getPlayerPosition().posX, playerThree.getPlayerPosition().posZ + 1);
+		}
+		if (inp->keys[KEY_CODE_K]) {
+			movePlayer(3, playerThree.getPlayerPosition().posX + 1, playerThree.getPlayerPosition().posZ);
+		}
+		if (inp->keys[KEY_CODE_L]) {
+			movePlayer(3, playerThree.getPlayerPosition().posX, playerThree.getPlayerPosition().posZ - 1);
+		}
+		if (inp->keys[KEY_CODE_M]) {
+			movePlayer(3, playerThree.getPlayerPosition().posX - 1, playerThree.getPlayerPosition().posZ);
+		}
+		if (inp->keys[KEY_CODE_P]) {
+			isBombPlacedPlayerThree = true;
+		}
 	}
 
 	// Player 4
-	if (inp->keys[KEY_CODE_NUMPAD8]) {
-		movePlayer(4, playerFour.getPlayerPosition().posX, playerFour.getPlayerPosition().posZ + 1);
-	}
-	if (inp->keys[KEY_CODE_NUMPAD4]) {
-		movePlayer(4, playerFour.getPlayerPosition().posX + 1, playerFour.getPlayerPosition().posZ);
-	}
-	if (inp->keys[KEY_CODE_NUMPAD5]) {
-		movePlayer(4, playerFour.getPlayerPosition().posX, playerFour.getPlayerPosition().posZ - 1);
-	}
-	if (inp->keys[KEY_CODE_NUMPAD6]) {
-		movePlayer(4, playerFour.getPlayerPosition().posX - 1, playerFour.getPlayerPosition().posZ);
-	}
-	if (inp->keys[KEY_CODE_NUMPAD9]) {
-		isBombPlacedPlayerFour = true;
+	if (isPlayerFourAlive) {
+		if (inp->keys[KEY_CODE_NUMPAD8]) {
+			movePlayer(4, playerFour.getPlayerPosition().posX, playerFour.getPlayerPosition().posZ + 1);
+		}
+		if (inp->keys[KEY_CODE_NUMPAD4]) {
+			movePlayer(4, playerFour.getPlayerPosition().posX + 1, playerFour.getPlayerPosition().posZ);
+		}
+		if (inp->keys[KEY_CODE_NUMPAD5]) {
+			movePlayer(4, playerFour.getPlayerPosition().posX, playerFour.getPlayerPosition().posZ - 1);
+		}
+		if (inp->keys[KEY_CODE_NUMPAD6]) {
+			movePlayer(4, playerFour.getPlayerPosition().posX - 1, playerFour.getPlayerPosition().posZ);
+		}
+		if (inp->keys[KEY_CODE_NUMPAD9]) {
+			isBombPlacedPlayerFour = true;
+		}
 	}
 }
 
@@ -611,6 +648,11 @@ void displayBombEffects() {
 		}
 	}
 	listPosBombEffect = tempList;
+}
+
+
+void isGameOver() {
+	// TODO display game over screen
 }
 
 
