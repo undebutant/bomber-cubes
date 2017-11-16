@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers sources\opengl">
+      <UniqueIdentifier>{56407e08-34cf-4126-8d38-2dc59d220bc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\opengl">
+      <UniqueIdentifier>{42bb2d96-80ee-4ec1-9dfc-1d7d01a762ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\gameplay">
+      <UniqueIdentifier>{c855ea6f-8d2c-43eb-9b1e-9a62a3c99088}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\gameplay">
+      <UniqueIdentifier>{2268ba3f-e556-406d-abf7-0d341e777631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{73baf167-50c0-41bf-8047-70b5fbbc8d72}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="camera.cpp">
+      <Filter>Fichiers sources\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Fichiers sources\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>Fichiers sources\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="load.cpp">
+      <Filter>Fichiers sources\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="maths_3d.cpp">
+      <Filter>Fichiers sources\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="ogl.cpp">
+      <Filter>Fichiers sources\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="point.cpp">
+      <Filter>Fichiers sources\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="quaternion.cpp">
+      <Filter>Fichiers sources\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Fichiers sources\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Fichiers sources\opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="map.cpp">
+      <Filter>Fichiers sources\gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Fichiers sources\gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="bomb.cpp">
+      <Filter>Fichiers sources\gameplay</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="camera.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="load.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="maths_3d.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="ogl.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="point.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="quaternion.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="type.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="window.h">
+      <Filter>Fichiers d%27en-tête\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>Fichiers d%27en-tête\gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Fichiers d%27en-tête\gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="bomb.h">
+      <Filter>Fichiers d%27en-tête\gameplay</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="artemis.tga">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="artemis_mask.tga">
+      <Filter>Images</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
