@@ -122,8 +122,8 @@ float timeDisplayAfterExplosion = 2.4f;
 
 // Defining the size of the window
 WINDOW *win = NULL;
-float sizeScreenX = 1600;
-float sizeScreenY = 900;
+int sizeScreenX = 1600;
+int sizeScreenY = 900;
 
 // Handling inputs and timer
 MY_INPUT *inp = NULL;
@@ -272,8 +272,8 @@ void displayLogoArtemis(float posX, float posY) {
 	glRasterPos2f(posX, posY);
 
 	// Resizing the sprite
-	float xfactor = 256.0 / textureArtemisLogo->img_color->lenx;
-	float yfactor = 128.0 / textureArtemisLogo->img_color->leny;
+	float xfactor = 256.0f / textureArtemisLogo->img_color->lenx;
+	float yfactor = 128.0f / textureArtemisLogo->img_color->leny;
 	glPixelZoom(xfactor, yfactor);
 
 	// Handling the sprite to display

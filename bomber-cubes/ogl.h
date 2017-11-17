@@ -22,7 +22,7 @@ void   swap_buffer        (WINDOW *w);
 void   init_font          (WINDOW &w, char *police_name);
 void   kill_font          ();
 void   gotoxy             (int x, int y);
-void   write_2_screen     (char *text, int posX, int posY, int posZ);
+void   write_2_screen     (char *text, float posX, float posY, float posZ);
 
 
 #endif
