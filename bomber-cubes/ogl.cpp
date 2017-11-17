@@ -206,20 +206,12 @@ void gotoxy(int x, int y)
 *  écrit le texte à l'écran. Même remarque que gotoxy().                   *
 *                                                                          *
 \**************************************************************************/
-void write_2_screen(char *text)
+void write_2_screen(char *text, int posX, int posY, int posZ)
 {
 	glDisable(GL_TEXTURE_2D);
 	glPushAttrib(GL_LIST_BIT);
 	glListBase(FontDiplayList - 32);
-	glRasterPos2i(0,0);
+	glRasterPos3i(posX, posY, posZ);
 	glCallLists((GLsizei)strlen(text), GL_UNSIGNED_BYTE, text);
 	glPopAttrib();
 }
-
-
-
-
-
-
-
-

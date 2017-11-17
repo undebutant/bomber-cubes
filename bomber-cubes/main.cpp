@@ -1,3 +1,7 @@
+#define _SCL_SECURE_NO_WARNINGS
+
+#include <string>
+
 #include "window.h"
 #include "input.h"
 #include "timer.h"
@@ -34,11 +38,23 @@ int nbSquareX = 13;
 int nbSquareZ = 11;
 
 
+// Handling end game
+float endGameTimer = 0.0f;
+int victoriouPlayer = 0;
+
+int nbVictoryPlayerOne = 0;
+int nbVictoryPlayerTwo = 0;
+int nbVictoryPlayerThree = 0;
+int nbVictoryPlayerFour = 0;
+
+
 // Setting up the map
 Map mapGame = Map(nbSquareX, nbSquareZ);
 
 
 // Setting up players
+int nbPlayerAlive = 4;
+
 Player playerOne = Player(0, 0);
 float colorPlayerOneR = 1.0f;
 float colorPlayerOneG = 0.0f;
@@ -84,7 +100,7 @@ float colorExplosionR = 1.0f;
 float colorExplosionG = 0.0f;
 float colorExplosionB = 0.0f;
 
-float timeBeforeNextMove = 2.4f;
+float timeBeforeNextMove = 2.0f;
 
 float timeBeforeNextMovePlayerOne = timeBeforeNextMove;
 float timeBeforeNextMovePlayerTwo = timeBeforeNextMove;
@@ -190,6 +206,40 @@ bool start() {
 	mapGame.setupMapLevelOne();
 
 	return true;
+}
+
+
+void reset() {
+	mapGame.setupMapLevelOne();
+
+	playerOne.updatePlayerPosition(0, 0);
+	playerTwo.updatePlayerPosition(0, nbSquareZ - 1);
+	playerThree.updatePlayerPosition(nbSquareX - 1, 0);
+	playerFour.updatePlayerPosition(nbSquareX - 1, nbSquareZ - 1);
+
+	isPlayerOneAlive = true;
+	isPlayerTwoAlive = true;
+	isPlayerThreeAlive = true;
+	isPlayerFourAlive = true;
+
+	nbPlayerAlive = 4;
+
+	timeBeforeNextMovePlayerOne = timeBeforeNextMove;
+	timeBeforeNextMovePlayerTwo = timeBeforeNextMove;
+	timeBeforeNextMovePlayerThree = timeBeforeNextMove;
+	timeBeforeNextMovePlayerFour = timeBeforeNextMove;
+
+	isBombPlacedPlayerOne = false;
+	isBombPlacedPlayerTwo = false;
+	isBombPlacedPlayerThree = false;
+	isBombPlacedPlayerFour = false;
+
+	bombList = Bomb();
+	listPosBombExplodingThisIteration = std::list<struct PosBombInMatrix>();
+	listPosBombEffect = std::list<struct DataAboutExplodedBomb>();
+
+	endGameTimer = 0.0f;
+	victoriouPlayer = 0;
 }
 
 
@@ -376,17 +426,21 @@ void displayMap() {
 		}
 	}
 
-	if (!isPlayerOneDrawn) {
+	if (!isPlayerOneDrawn && isPlayerOneAlive) {
 		isPlayerOneAlive = false;
+		nbPlayerAlive--;
 	}
-	if (!isPlayerTwoDrawn) {
+	if (!isPlayerTwoDrawn && isPlayerTwoAlive) {
 		isPlayerTwoAlive = false;
+		nbPlayerAlive--;
 	}
-	if (!isPlayerThreeDrawn) {
+	if (!isPlayerThreeDrawn && isPlayerThreeAlive) {
 		isPlayerThreeAlive = false;
+		nbPlayerAlive--;
 	}
-	if (!isPlayerFourDrawn) {
+	if (!isPlayerFourDrawn && isPlayerFourAlive) {
 		isPlayerFourAlive = false;
+		nbPlayerAlive--;
 	}
 }
 
@@ -496,13 +550,18 @@ void movePlayer(int idPlayer, int newPosX, int newPosZ) {
 
 
 void handleInput() {
-	// Handling mouse movements
 	if (inp->RBmouse) {
+		// Handling mouse movements
 		inp->get_mouse_movement();
 	}
 	if (inp->keys[KEY_CODE_ESCAPE]) {
 		// Stop the message flow by sending QUIT message
 		PostMessage(win->handle, WM_CLOSE, 0, 0);
+	}
+
+	if (inp->keys[KEY_CODE_TAB]) {
+		// Resetting the game
+		reset();
 	}
 
 	// Player one
@@ -651,8 +710,95 @@ void displayBombEffects() {
 }
 
 
+void handleVictory(int idPlayer) {
+	endGameTimer = 30.0f;
+	victoriouPlayer = idPlayer;
+	nbPlayerAlive = 4;
+}
+
+
 void isGameOver() {
-	// TODO display game over screen
+	if (nbPlayerAlive <= 1) {
+		if (isPlayerOneAlive) {
+			nbVictoryPlayerOne++;
+			handleVictory(1);
+		}
+		else if (isPlayerTwoAlive) {
+			nbVictoryPlayerTwo++;
+			handleVictory(2);
+		}
+		else if (isPlayerThreeAlive) {
+			nbVictoryPlayerThree++;
+			handleVictory(3);
+		}
+		else if (isPlayerFourAlive) {
+			nbVictoryPlayerFour++;
+			handleVictory(4);
+		}
+		else {
+			handleVictory(0);
+		}
+	}
+}
+
+
+void displayGameOver() {
+	std::string textVictory;
+	if (victoriouPlayer == 0) {
+		textVictory = "No player won this time : draw !";
+	}
+	else {
+		textVictory = "Player " + std::to_string(victoriouPlayer);
+
+		textVictory += " won this round !";
+	}
+
+	char *textVictoryChar = new char[textVictory.size() + 1];
+	std::copy(textVictory.begin(), textVictory.end(), textVictoryChar);
+	textVictoryChar[textVictory.size()] = '\0';
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	write_2_screen(textVictoryChar, ((nbSquareX + 1) * sizeSquareX) / 2 + 60, 0.0f, ((nbSquareZ + 1) * sizeSquareZ) / 2 - 340);
+
+	endGameTimer -= 0.02f;
+
+	if (endGameTimer <= 0.0f) {
+		reset();
+	}
+}
+
+
+void displayScore() {
+	std::string textScore;
+
+	for (int i = 1; i < 5; i++) {
+
+		textScore += "   Player" + std::to_string(i) + ": ";
+
+		switch (i) {
+		case 1:
+			textScore += std::to_string(nbVictoryPlayerOne);
+			break;
+		case 2:
+			textScore += std::to_string(nbVictoryPlayerTwo);
+			break;
+		case 3:
+			textScore += std::to_string(nbVictoryPlayerThree);
+			break;
+		case 4:
+			textScore += std::to_string(nbVictoryPlayerFour);
+			break;
+		default:
+			break;
+		}
+	}
+
+	char *textScoreChar = new char[textScore.size() + 1];
+	std::copy(textScore.begin(), textScore.end(), textScoreChar);
+	textScoreChar[textScore.size()] = '\0';
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	write_2_screen(textScoreChar, ((nbSquareX + 1) * sizeSquareX) / 2 + 200, 0.0f, ((nbSquareZ + 1) * sizeSquareZ) / 2 + 340);
 }
 
 
@@ -663,6 +809,9 @@ void isGameOver() {
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 void main_loop() {
+	// Checking if the game is over
+	isGameOver();
+
 	// Time update
 	tim->update_horloge();
 
@@ -671,7 +820,10 @@ void main_loop() {
 
 	// Input update
 	inp->refresh();
-	handleInput();
+
+	if (endGameTimer <= 0.0f) {
+		handleInput();
+	}
 
 	// Handling bombs
 	listPosBombExplodingThisIteration = bombList.updateTimersBombs();
@@ -712,8 +864,14 @@ void main_loop() {
 	displayBombEffects();
 
 	// Displaying the map at its current state
-	displayMap();
 
+	displayMap();
+	
+	if (endGameTimer > 0.0f) {
+		displayGameOver();
+	}
+
+	displayScore();
 
 	// Displaying the created image to the screen
 	swap_buffer(win);

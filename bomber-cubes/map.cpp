@@ -213,13 +213,25 @@ void Map::setupMapLevelOne() {
 	}
 
 	for (int i = 3; i < sizeI - 3; i++) {
-		map[i][0] = 12;
-		map[i][sizeJ - 1] = 12;
+		if (i < 3 || i > sizeI - 3) {
+			map[i][0] = 0;
+			map[i][sizeJ - 1] = 0;
+		}
+		else {
+			map[i][0] = 12;
+			map[i][sizeJ - 1] = 12;
+		}
 	}
 
-	for (int j = 3; j < sizeJ - 3; j++) {
-		map[0][j] = 12;
-		map[sizeI - 1][j] = 12;
+	for (int j = 0; j < sizeJ; j++) {
+		if (j < 3 || j > sizeJ - 3) {
+			map[0][j] = 0;
+			map[sizeI - 1][j] = 0;
+		}
+		else {
+			map[0][j] = 12;
+			map[sizeI - 1][j] = 12;
+		}
 	}
 
 	// Adding players to the map
